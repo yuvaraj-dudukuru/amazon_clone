@@ -1,0 +1,241 @@
+.auth-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--amazon-dark) 0%, var(--amazon-blue) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.auth-header {
+  background: var(--amazon-orange);
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.auth-header h1 {
+  margin: 0 0 10px 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.auth-header p {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.9rem;
+}
+
+.auth-form {
+  padding: 30px 20px;
+}
+
+.auth-form .form-group {
+  margin-bottom: 20px;
+}
+
+.auth-form .form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--amazon-text);
+  font-size: 0.9rem;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--amazon-text-secondary);
+  font-size: 16px;
+  z-index: 1;
+}
+
+.auth-form .form-input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 2px solid var(--amazon-border);
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.auth-form .form-input:focus {
+  outline: none;
+  border-color: var(--amazon-orange);
+  box-shadow: 0 0 0 3px rgba(255, 153, 0, 0.1);
+}
+
+.auth-form .form-input.error {
+  border-color: var(--amazon-error);
+}
+
+.auth-form .form-input:disabled {
+  background: var(--amazon-light-gray);
+  cursor: not-allowed;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--amazon-text-secondary);
+  cursor: pointer;
+  padding: 0;
+  font-size: 16px;
+  z-index: 1;
+}
+
+.password-toggle:hover {
+  color: var(--amazon-text);
+}
+
+.password-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.error-message {
+  color: var(--amazon-error);
+  font-size: 0.8rem;
+  margin-top: 5px;
+  display: block;
+}
+
+.auth-error {
+  background: #fee;
+  color: var(--amazon-error);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  border: 1px solid #fcc;
+}
+
+.auth-button {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.auth-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.auth-footer {
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid var(--amazon-border);
+  background: var(--amazon-light-gray);
+}
+
+.auth-footer p {
+  margin: 0;
+  color: var(--amazon-text-secondary);
+  font-size: 0.9rem;
+}
+
+.auth-link {
+  color: var(--amazon-orange);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.auth-link:hover {
+  color: var(--amazon-dark-orange);
+  text-decoration: underline;
+}
+
+/* Role Selection Styles */
+.role-selection {
+  margin-bottom: 20px;
+}
+
+.role-options {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.role-option {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid var(--amazon-border);
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.role-option:hover {
+  border-color: var(--amazon-orange);
+}
+
+.role-option.selected {
+  border-color: var(--amazon-orange);
+  background: var(--amazon-orange);
+  color: white;
+}
+
+.role-option input[type="radio"] {
+  display: none;
+}
+
+.role-option label {
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 10px;
+  }
+  
+  .auth-container {
+    max-width: 100%;
+  }
+  
+  .auth-header {
+    padding: 25px 15px;
+  }
+  
+  .auth-header h1 {
+    font-size: 1.6rem;
+  }
+  
+  .auth-form {
+    padding: 25px 15px;
+  }
+  
+  .role-options {
+    flex-direction: column;
+  }
+} 
