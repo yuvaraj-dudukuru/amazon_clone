@@ -268,7 +268,7 @@ If you encounter any issues or have questions:
 
 1. Check the [Issues](https://github.com/your-username/amazon-clone/issues) page
 2. Create a new issue with detailed description
-3. Contact: your-email@example.com
+3. Contact: dudukuruyuvaraj55@gmail.com
 
 ---
 
