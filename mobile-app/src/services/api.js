@@ -1,10 +1,21 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Base URL - change this to your backend URL
-const BASE_URL = 'http://10.0.2.2:5000/api'; // For Android emulator
-// const BASE_URL = 'http://localhost:5000/api'; // For iOS simulator
-// const BASE_URL = 'http://your-backend-url.com/api'; // For production
+// Resolve API base URL from env or sensible defaults
+// For physical device, set EXPO_PUBLIC_API_URL to http://YOUR_PC_IP:5000/api
+const ENV_BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+const DEFAULT_ANDROID_EMULATOR_URL = 'http://10.0.2.2:5000/api';
+const FALLBACK_URL = DEFAULT_ANDROID_EMULATOR_URL;
+
+export const BASE_URL = ENV_BASE_URL || FALLBACK_URL;
+export const BASE_ORIGIN = BASE_URL.replace(/\/?api\/?$/, '');
+
+export const buildImageUrl = (maybeRelativeUrl) => {
+  if (!maybeRelativeUrl) return undefined;
+  if (/^https?:\/\//i.test(maybeRelativeUrl)) return maybeRelativeUrl;
+  const normalizedPath = String(maybeRelativeUrl).replace(/^\//, '');
+  return `${BASE_ORIGIN}/${normalizedPath}`;
+};
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -22,9 +33,7 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // Response interceptor to handle errors
@@ -32,7 +41,6 @@ api.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      // Token expired or invalid
       await AsyncStorage.removeItem('token');
       await AsyncStorage.removeItem('user');
     }

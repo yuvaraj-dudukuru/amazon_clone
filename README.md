@@ -273,3 +273,131 @@ If you encounter any issues or have questions:
 ---
 
 **Happy Coding! 🚀** 
+
+## 📱 Mobile App (React Native + Expo)
+
+Build and run a native Android/iOS app that connects to the same backend.
+
+### ✅ Prerequisites
+
+- Node.js 16+ and npm
+- Backend running (see backend setup above)
+- Expo CLI (local): `npx expo --version` (no global install required)
+- Expo Go app on your phone (from Play Store/App Store)
+- Optional: Android Studio + SDK (only needed for emulator)
+
+### 📦 Install Mobile Dependencies (first time)
+
+```
+cd mobile-app
+npm install
+```
+
+### 🔧 Configure API URL for Mobile
+
+Set the mobile app to talk to your backend. Use ONE of these based on where you run the app:
+
+- Physical device on same Wi‑Fi (recommended):
+  - Windows PowerShell before starting Expo:
+    ```powershell
+    # Replace 192.168.X.X with your PC's IP from `ipconfig`
+    $env:EXPO_PUBLIC_API_URL="http://192.168.X.X:5000/api"
+    ```
+- Android Emulator:
+  ```powershell
+  $env:EXPO_PUBLIC_API_URL="http://10.0.2.2:5000/api"
+  ```
+
+The app reads this at runtime and uses it for all API calls and image URLs.
+
+### ▶️ Start Mobile App
+
+Tunnel mode (most reliable across networks):
+
+```
+npx expo start -c --tunnel
+```
+
+- Scan the QR with Expo Go on your phone
+- Ensure phone and PC are on the same network (or keep tunnel)
+
+LAN mode (fastest when your phone can reach your PC IP directly):
+
+```
+npx expo start -c
+```
+
+Then in Expo Go choose “Open using LAN”.
+
+### 🧪 Mobile Features Included
+
+- Auth (login/register), product browse/search, categories
+- Product details, add to cart, update quantities
+- Orders list and checkout flow (demo)
+- Profile screen
+
+### 📝 Backend Environment (recap)
+
+`backend/.env` example:
+
+```
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/amazon-clone
+JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+NODE_ENV=development
+```
+
+Run backend:
+
+```
+cd backend
+npm run dev
+```
+
+### 🛡️ Windows Firewall (if device can’t reach backend)
+
+Allow port 5000 inbound:
+
+```
+netsh advfirewall firewall add rule name="Node 5000" dir=in action=allow protocol=TCP localport=5000
+```
+
+### 🧩 Expo SDK Compatibility
+
+- Current project uses Expo SDK 49 (see `mobile-app/package.json`). If Expo Go on your phone is SDK 53+, you’ll see a compatibility error.
+- Options:
+  - Upgrade project to SDK 53+: `npm install --save-exact expo@~53 && npx expo install --fix && npx expo-doctor`
+  - Or install an Expo Go build compatible with SDK 49 (see Expo docs)
+
+### 🐛 Troubleshooting (Mobile)
+
+- “Something went wrong” after scanning QR:
+  - Clear Expo Go cache (Android: App info → Storage → Clear storage/cache; iOS: reinstall)
+  - Start with tunnel: `npx expo start -c --tunnel`
+  - Ensure `EXPO_PUBLIC_API_URL` is set to your PC IP (not localhost)
+
+- `AxiosError: Network Error` in app:
+  - Backend not reachable from phone. Verify you can open `http://192.168.X.X:5000` in phone browser
+  - Use tunnel mode or open firewall for port 5000
+
+- `java.io.IOException: failed to download remote update`:
+  - Network/caching issue. Clear Expo Go cache, restart with `-c`, use tunnel, ensure stable Wi‑Fi
+
+- `Failed to resolve the Android SDK path` when opening emulator:
+  - Install Android Studio + SDK, or just use phone + Expo Go
+
+- Tunnel package error `spawn cmd.exe ENOENT` on Windows:
+  - Install ngrok locally: `npm install -D @expo/ngrok@^4.1.0` then `npx expo start --tunnel`
+
+- Web dependencies warning in Expo:
+  - This project disables web in `mobile-app/app.json`; use native targets (Android/iOS)
+
+### 📂 Repository Structure (including mobile)
+
+```
+amazon-clone/
+├── backend/               # Node.js/Express API (MongoDB)
+├── frontend/              # React web app
+├── mobile-app/            # React Native (Expo) mobile app
+└── README.md              # This file
+```
